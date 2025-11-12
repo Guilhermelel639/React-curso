@@ -1,18 +1,15 @@
-
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UsuarioLogadoContext } from "../../shared/contexts/UsuarioLogado";
+import { useUsuarioLogado } from "../../shared/hooks";
 
 export const Dashboard = () => {
-    const usuarioLogadoContext = useContext(UsuarioLogadoContext);
+  const { nomeDoUsuario, logout } = useUsuarioLogado();
 
-    return (
-        <div>
-
-        <p>Dashboard Page</p>
-        <p>{usuarioLogadoContext.nomeDoUsuario}</p>
-
-        <Link to="/login">Go to Login</Link>
-        </div>
-    );
-}
+  return (
+    <div>
+      <p>Dashboard Page</p>
+      <p>{nomeDoUsuario}</p>
+      <Link to="/login">Go to Login</Link>
+      <button onClick={logout}>Logout</button>
+    </div>
+  );
+};
