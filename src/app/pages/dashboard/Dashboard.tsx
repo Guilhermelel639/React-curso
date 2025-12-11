@@ -1,7 +1,12 @@
-import {use, useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
+
+interface IlistItem{
+  title: string;
+  isSelected: boolean;
+}
 
 export const Dashboard = () => {
-  const [lista, setLista] = useState<string[]>(["teste1", "teste2", "teste3"]);
+  const [lista, setLista] = useState<IlistItem[]>([]);
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
     if (e.key === "Enter") {
@@ -10,8 +15,10 @@ export const Dashboard = () => {
       const value = e.currentTarget.value;
 
       setLista((prevLista) => {
-        if (prevLista.includes(value))return prevLista;
-        return [...prevLista, value];
+        if (prevLista.some((item) => item.title === value.trim()))return prevLista;
+        return [...prevLista, 
+          {title: value, isSelected: false}
+        ];
       });
       e.currentTarget.value = "";
     }
@@ -22,9 +29,24 @@ export const Dashboard = () => {
       <p>lista</p>
       <input type="text" onKeyDown={handleKeyDown} />
 
+      <p>{lista.filter((item) => item.isSelected).length}</p>
+
       <ul>
         {lista.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index}>
+            <input type="checkbox" onChange={()=> {
+              setLista(prevLista => {
+                return prevLista.map(item => {
+                  const newIsSelected = item.title === lista[index].title ? !item.isSelected : item.isSelected;
+                  return {
+                    ...item,
+                    isSelected: newIsSelected
+                  }
+                })
+            })
+            }} />
+            {item.title}
+            </li>
         ))}
       </ul>
 
