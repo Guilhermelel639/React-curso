@@ -1,4 +1,4 @@
-import { createContext, use, useCallback, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 interface IUsuarioLogadoContextData{
     nomeDoUsuario: string;
