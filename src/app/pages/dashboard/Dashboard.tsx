@@ -4,6 +4,7 @@ import {
   TarefasService,
 } from "../../shared/services/api/tarefas/TarefasService";
 import { ApiException } from "../../shared/services/api/ApiExeception";
+import {useNavigate} from "react-router-dom";
 
 export const Dashboard = () => {
   const [lista, setLista] = useState<Itarefa[]>([]);
@@ -17,6 +18,8 @@ export const Dashboard = () => {
       }
     });
   }, []);
+
+  const navigate = useNavigate();
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
     useCallback(
@@ -103,6 +106,7 @@ export const Dashboard = () => {
           </li>
         ))}
       </ul>
+      <button onClick={() => navigate("/login")}>ir para login</button>
     </div>
   );
 };

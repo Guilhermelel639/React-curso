@@ -2,12 +2,15 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { InputLogin } from "./components/InputLogin";
 import { ButtonLogin } from "./components/ButtonLogin";
 import { useUsuarioLogado } from "../../shared/hooks";
+import { useNavigate } from "react-router-dom";
+import { UsuarioService } from "../../shared/services/api/usuario/usuarioService"; 
 
 export const Login = () => {
   const inputPasswordRef = useRef<HTMLInputElement>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const usuarioLogadoContext = useUsuarioLogado();
+  const navigate = useNavigate();
 
   const emailLength = useMemo(() => {
     return email.length;
@@ -53,6 +56,10 @@ export const Login = () => {
         <ButtonLogin type="button" onClick={handleLogin}>
           entrar
         </ButtonLogin>
+        <br />
+        <button type="button" onClick={() => navigate(-1)}>
+          voltar
+        </button>
       </form>
     </div>
   );

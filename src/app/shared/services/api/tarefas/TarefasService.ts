@@ -24,7 +24,6 @@ const getById = async (id: number): Promise<Itarefa | ApiException> => {
     } catch (error: any) {
         return new ApiException(error.message || 'Erro ao buscar a tarefa');
     }
-
 };
 
 const create = async (dataToCreate: Omit<Itarefa, 'id'>): Promise<Itarefa | ApiException> => {

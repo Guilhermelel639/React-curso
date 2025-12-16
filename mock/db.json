@@ -20,5 +20,12 @@
       "title": "4",
       "isCompleted": false
     }
+  ],
+  "user": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin"
+    }
   ]
 }
