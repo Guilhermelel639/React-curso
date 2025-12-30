@@ -3,7 +3,7 @@ import { InputLogin } from "./components/InputLogin";
 import { ButtonLogin } from "./components/ButtonLogin";
 import { useUsuarioLogado } from "../../shared/hooks";
 import { useNavigate } from "react-router-dom";
-import { UsuarioService } from "../../shared/services/api/usuario/usuarioService"; 
+import { UsuarioService, IUsuario } from "../../shared/services/api/usuario/usuarioService"; 
 
 export const Login = () => {
   const inputPasswordRef = useRef<HTMLInputElement>(null);
@@ -16,9 +16,20 @@ export const Login = () => {
     return email.length;
   }, [email]);
 
-  const handleLogin = useCallback(() => {
-    console.log("Fazendo login com", { email, password });
-  }, [email, password]);
+  const handleLogin = useCallback(async () => {
+    const usuario: IUsuario | any = await UsuarioService.getByUsername(email);
+    if (usuario instanceof Error) {
+      alert(usuario.message);
+      return;
+    }
+    if (usuario.password !== password) {
+      alert("Senha incorreta");
+      return;
+    }
+    usuarioLogadoContext.nomeDoUsuario = usuario.username;
+    navigate("/dashboard");
+  }, []
+  );
 
   useEffect(() => {
     if (window.confirm("sim?")) {
